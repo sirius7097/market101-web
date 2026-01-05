@@ -33,9 +33,9 @@ const STRATEGY_RECORDS: StrategyRecord[] = [
     symbol: "ETH",
     direction: "LONG",
     entry: 2971,
-    target: 3200,
-    profit: 7.71,
-    profitUsd: 229,
+    target: 3250,
+    profit: 9.39,
+    profitUsd: 279,
   },
   {
     id: 2,
@@ -44,9 +44,9 @@ const STRATEGY_RECORDS: StrategyRecord[] = [
     symbol: "BTC",
     direction: "LONG",
     entry: 89490,
-    target: 93000,
-    profit: 3.92,
-    profitUsd: 3510,
+    target: 94500,
+    profit: 5.60,
+    profitUsd: 5010,
   },
   {
     id: 3,
@@ -73,12 +73,16 @@ export function CryptoPricePanel() {
   })
   const [connected, setConnected] = useState(false)
   const [connecting, setConnecting] = useState(true)
+  const [initialLoading, setInitialLoading] = useState(true) // 只在首次加载时显示加载动画
   const wsRef = useRef<WebSocket | null>(null)
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const fetchPrices = useCallback(async () => {
     try {
-      setConnecting(true)
+      // 只在首次加载时设置 connecting 状态，避免图标抖动
+      if (initialLoading) {
+        setConnecting(true)
+      }
       const response = await fetch(CRYPTO_API, {
         cache: 'no-store',
       })
@@ -99,12 +103,13 @@ export function CryptoPricePanel() {
       
       setConnected(true)
       setConnecting(false)
+      setInitialLoading(false) // 首次加载完成后不再显示加载动画
     } catch (error) {
       console.error('Fetch error:', error)
       setConnected(false)
       setConnecting(false)
     }
-  }, [])
+  }, [initialLoading])
 
   useEffect(() => {
     // 立即获取一次数据

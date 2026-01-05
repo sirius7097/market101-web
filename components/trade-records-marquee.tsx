@@ -20,7 +20,7 @@ const defaultRecords: TradeRecord[] = [
   { id: 1, coin: "BTC", strategy: "KAIYANG", entryPrice: 92403, exitPrice: 104391, pointsGained: 11988 },
   { id: 2, coin: "BTC", strategy: "KAIYANG", entryPrice: 101408, exitPrice: 109705, pointsGained: 8297 },
   { id: 3, coin: "BTC", strategy: "KAIYANG", entryPrice: 83773, exitPrice: 90381, pointsGained: 6608 },
-  { id: 4, coin: "BTC", strategy: "KAIYANG", entryPrice: 89490, exitPrice: 93000, pointsGained: 3510 },
+  { id: 4, coin: "BTC", strategy: "KAIYANG", entryPrice: 89490, exitPrice: 94500, pointsGained: 5010 },
   { id: 5, coin: "BTC", strategy: "KAIYANG", entryPrice: 86580, exitPrice: 91263, pointsGained: 4683 },
   // KAIYANG - ETH strategies with points
   { id: 6, coin: "ETH", strategy: "KAIYANG", entryPrice: 3333, exitPrice: 3838, pointsGained: 505 },
@@ -28,7 +28,7 @@ const defaultRecords: TradeRecord[] = [
   { id: 8, coin: "ETH", strategy: "KAIYANG", entryPrice: 3185, exitPrice: 3360, pointsGained: 175 },
   { id: 9, coin: "ETH", strategy: "KAIYANG", entryPrice: 2939, exitPrice: 3015, pointsGained: 76 },
   { id: 10, coin: "ETH", strategy: "KAIYANG", entryPrice: 2811, exitPrice: 2944, pointsGained: 133 },
-  { id: 11, coin: "ETH", strategy: "KAIYANG", entryPrice: 2971, exitPrice: 3205, pointsGained: 234 },
+  { id: 11, coin: "ETH", strategy: "KAIYANG", entryPrice: 2971, exitPrice: 3250, pointsGained: 279 },
   { id: 12, coin: "ETH", strategy: "KAIYANG", entryPrice: 2850, exitPrice: 3271, pointsGained: 421 },
   // ALPHA - Altcoin strategies with percentage
   { id: 13, coin: "PIPPIN", strategy: "ALPHA", entryPrice: 0.483, exitPrice: 0.695, gain: 44 },
