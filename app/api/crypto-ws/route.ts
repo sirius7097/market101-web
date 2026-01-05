@@ -16,58 +16,59 @@ interface CryptoPrice {
 // 缓存数据
 let cachedPrices: CryptoPrice[] = []
 let lastFetchTime = 0
-const CACHE_DURATION = 5000 // 5 秒缓存
+const CACHE_DURATION = 3000 // 3 秒缓存
 
-async function fetchFromCoinbase(): Promise<CryptoPrice[]> {
+async function fetchFromCryptoCompare(): Promise<CryptoPrice[]> {
   try {
-    // 使用 Coinbase API 获取实时价格
-    const [btcResponse, ethResponse] = await Promise.all([
-      fetch("https://api.coinbase.com/v2/prices/BTC-USD/spot", {
-        headers: { Accept: "application/json" },
-      }),
-      fetch("https://api.coinbase.com/v2/prices/ETH-USD/spot", {
-        headers: { Accept: "application/json" },
-      }),
-    ])
+    // 使用 CryptoCompare API - 全球 CDN，国内可访问
+    const response = await fetch(
+      "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH&tsyms=USD",
+      {
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    )
 
-    if (!btcResponse.ok || !ethResponse.ok) {
-      throw new Error("Coinbase API error")
+    if (!response.ok) {
+      throw new Error(`CryptoCompare API error: ${response.status}`)
     }
 
-    const btcData = await btcResponse.json()
-    const ethData = await ethResponse.json()
+    const data = await response.json()
 
     const prices: CryptoPrice[] = []
 
-    if (btcData.data && btcData.data.amount) {
-      const btcPrice = parseFloat(btcData.data.amount)
+    // 解析 BTC 数据
+    if (data.RAW && data.RAW.BTC && data.RAW.BTC.USD) {
+      const btc = data.RAW.BTC.USD
       prices.push({
         symbol: "BTC",
-        price: btcPrice,
-        change24h: 0, // Coinbase spot API 不提供 24h 变化
-        high24h: btcPrice * 1.01,
-        low24h: btcPrice * 0.99,
-        volume: 0,
-        timestamp: Date.now(),
+        price: btc.PRICE || 0,
+        change24h: btc.CHANGEPCT24HOUR || 0,
+        high24h: btc.HIGH24HOUR || btc.PRICE,
+        low24h: btc.LOW24HOUR || btc.PRICE,
+        volume: btc.VOLUME24HOURTO || 0,
+        timestamp: (btc.LASTUPDATE || Date.now() / 1000) * 1000,
       })
     }
 
-    if (ethData.data && ethData.data.amount) {
-      const ethPrice = parseFloat(ethData.data.amount)
+    // 解析 ETH 数据
+    if (data.RAW && data.RAW.ETH && data.RAW.ETH.USD) {
+      const eth = data.RAW.ETH.USD
       prices.push({
         symbol: "ETH",
-        price: ethPrice,
-        change24h: 0,
-        high24h: ethPrice * 1.01,
-        low24h: ethPrice * 0.99,
-        volume: 0,
-        timestamp: Date.now(),
+        price: eth.PRICE || 0,
+        change24h: eth.CHANGEPCT24HOUR || 0,
+        high24h: eth.HIGH24HOUR || eth.PRICE,
+        low24h: eth.LOW24HOUR || eth.PRICE,
+        volume: eth.VOLUME24HOURTO || 0,
+        timestamp: (eth.LASTUPDATE || Date.now() / 1000) * 1000,
       })
     }
 
     return prices
   } catch (error) {
-    console.error("[Crypto API] Coinbase fetch error:", error)
+    console.error("[Crypto API] CryptoCompare fetch error:", error)
     throw error
   }
 }
@@ -80,7 +81,7 @@ export async function GET(request: NextRequest) {
     return new Response(JSON.stringify(cachedPrices), {
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "public, s-maxage=5, stale-while-revalidate=10",
+        "Cache-Control": "public, s-maxage=3, stale-while-revalidate=10",
         "Access-Control-Allow-Origin": "*",
       },
     })
@@ -88,7 +89,7 @@ export async function GET(request: NextRequest) {
 
   try {
     // 获取新数据
-    const prices = await fetchFromCoinbase()
+    const prices = await fetchFromCryptoCompare()
 
     if (prices.length > 0) {
       cachedPrices = prices
@@ -98,7 +99,7 @@ export async function GET(request: NextRequest) {
     return new Response(JSON.stringify(prices), {
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "public, s-maxage=5, stale-while-revalidate=10",
+        "Cache-Control": "public, s-maxage=3, stale-while-revalidate=10",
         "Access-Control-Allow-Origin": "*",
       },
     })
@@ -108,7 +109,7 @@ export async function GET(request: NextRequest) {
       return new Response(JSON.stringify(cachedPrices), {
         headers: {
           "Content-Type": "application/json",
-          "Cache-Control": "public, s-maxage=5, stale-while-revalidate=10",
+          "Cache-Control": "public, s-maxage=3, stale-while-revalidate=10",
           "Access-Control-Allow-Origin": "*",
           "X-Cache": "STALE",
         },
@@ -140,7 +141,7 @@ export async function GET(request: NextRequest) {
     return new Response(JSON.stringify(fallbackPrices), {
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "public, s-maxage=5, stale-while-revalidate=10",
+        "Cache-Control": "public, s-maxage=3, stale-while-revalidate=10",
         "Access-Control-Allow-Origin": "*",
         "X-Cache": "FALLBACK",
       },
