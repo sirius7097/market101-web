@@ -110,8 +110,8 @@ export function CryptoPricePanel() {
     // 立即获取一次数据
     fetchPrices()
     
-    // 每 2 秒更新一次价格
-    const interval = setInterval(fetchPrices, 2000)
+    // 每 1 秒更新一次价格
+    const interval = setInterval(fetchPrices, 1000)
     
     return () => {
       clearInterval(interval)
