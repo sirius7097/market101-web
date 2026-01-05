@@ -60,7 +60,8 @@ const STRATEGY_RECORDS: StrategyRecord[] = [
   },
 ]
 
-const BINANCE_FUTURES_WS = "wss://fstream.binance.com/stream?streams=btcusdt@ticker/ethusdt@ticker"
+// 使用服务器端 API 代理，避免地区限制
+const CRYPTO_API = "/api/crypto-ws"
 
 export function CryptoPricePanel() {
   const [prices, setPrices] = useState<Map<string, CryptoPrice>>(() => {
@@ -75,75 +76,50 @@ export function CryptoPricePanel() {
   const wsRef = useRef<WebSocket | null>(null)
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  const connectWebSocket = useCallback(() => {
-    if (wsRef.current) {
-      wsRef.current.close()
-    }
-
-    setConnecting(true)
-
-    const ws = new WebSocket(BINANCE_FUTURES_WS)
-
-    ws.onopen = () => {
+  const fetchPrices = useCallback(async () => {
+    try {
+      setConnecting(true)
+      const response = await fetch(CRYPTO_API, {
+        cache: 'no-store',
+      })
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch prices')
+      }
+      
+      const data = await response.json()
+      
+      setPrices((prev) => {
+        const newPrices = new Map(prev)
+        data.forEach((crypto: CryptoPrice) => {
+          newPrices.set(crypto.symbol, crypto)
+        })
+        return newPrices
+      })
+      
       setConnected(true)
       setConnecting(false)
-    }
-
-    ws.onmessage = (event) => {
-      try {
-        const message = JSON.parse(event.data)
-        const data = message.data
-
-        if (data && data.s) {
-          const symbol = data.s.replace("USDT", "")
-
-          setPrices((prev) => {
-            const newPrices = new Map(prev)
-            newPrices.set(symbol, {
-              symbol,
-              price: Number.parseFloat(data.c),
-              change24h: Number.parseFloat(data.P),
-              high24h: Number.parseFloat(data.h),
-              low24h: Number.parseFloat(data.l),
-              volume: Number.parseFloat(data.q),
-            })
-            return newPrices
-          })
-        }
-      } catch (error) {
-        console.error("Parse error:", error)
-      }
-    }
-
-    ws.onerror = () => {
+    } catch (error) {
+      console.error('Fetch error:', error)
       setConnected(false)
       setConnecting(false)
     }
-
-    ws.onclose = () => {
-      setConnected(false)
-      setConnecting(false)
-
-      reconnectTimeoutRef.current = setTimeout(() => {
-        connectWebSocket()
-      }, 2000)
-    }
-
-    wsRef.current = ws
   }, [])
 
   useEffect(() => {
-    connectWebSocket()
-
+    // 立即获取一次数据
+    fetchPrices()
+    
+    // 每 2 秒更新一次价格
+    const interval = setInterval(fetchPrices, 2000)
+    
     return () => {
-      if (wsRef.current) {
-        wsRef.current.close()
-      }
+      clearInterval(interval)
       if (reconnectTimeoutRef.current) {
         clearTimeout(reconnectTimeoutRef.current)
       }
     }
-  }, [connectWebSocket])
+  }, [fetchPrices])
 
   const priceList = Array.from(prices.values()).sort((a, b) => {
     const order = ["BTC", "ETH"]
