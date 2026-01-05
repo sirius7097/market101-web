@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { Header } from "@/components/header"
 import { HeroSection } from "@/components/hero-section"
 import { TradeRecordsMarquee } from "@/components/trade-records-marquee"
@@ -15,7 +16,9 @@ export default function Home() {
       <div className="relative z-10">
         <Header />
         <HeroSection />
-        <TradeRecordsMarquee />
+        <Suspense fallback={null}>
+          <TradeRecordsMarquee />
+        </Suspense>
         <StrategiesSection />
         <PricingSection />
         <TelegramSection />
