@@ -23,7 +23,7 @@ export function useTypingSound() {
       bassOsc.type = "sine"
       bassOsc.frequency.setValueAtTime(45, now)
       bassOsc.frequency.exponentialRampToValueAtTime(20, now + 0.12)
-      bassGain.gain.setValueAtTime(0.5, now)
+      bassGain.gain.setValueAtTime(0.8, now)
       bassGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15)
 
       // 次低频层 - 增加温暖厚度
@@ -40,7 +40,7 @@ export function useTypingSound() {
       lowpass.frequency.value = 200
 
       const masterGain = ctx.createGain()
-      masterGain.gain.value = 1.2
+      masterGain.gain.value = 2.0
 
       bassOsc.connect(bassGain)
       subOsc.connect(subGain)

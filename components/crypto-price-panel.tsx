@@ -63,7 +63,13 @@ const STRATEGY_RECORDS: StrategyRecord[] = [
 const BINANCE_FUTURES_WS = "wss://fstream.binance.com/stream?streams=btcusdt@ticker/ethusdt@ticker"
 
 export function CryptoPricePanel() {
-  const [prices, setPrices] = useState<Map<string, CryptoPrice>>(new Map())
+  const [prices, setPrices] = useState<Map<string, CryptoPrice>>(() => {
+    // 初始占位数据，避免长时间空白
+    const initial = new Map<string, CryptoPrice>()
+    initial.set('BTC', { symbol: 'BTC', price: 94000, change24h: 0, high24h: 94500, low24h: 93500, volume: 0 })
+    initial.set('ETH', { symbol: 'ETH', price: 3200, change24h: 0, high24h: 3250, low24h: 3150, volume: 0 })
+    return initial
+  })
   const [connected, setConnected] = useState(false)
   const [connecting, setConnecting] = useState(true)
   const wsRef = useRef<WebSocket | null>(null)
@@ -120,7 +126,7 @@ export function CryptoPricePanel() {
 
       reconnectTimeoutRef.current = setTimeout(() => {
         connectWebSocket()
-      }, 3000)
+      }, 2000)
     }
 
     wsRef.current = ws

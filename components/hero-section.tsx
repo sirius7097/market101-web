@@ -149,7 +149,7 @@ export function HeroSection() {
   useEffect(() => {
     if (displayedText.length < codeContent.length) {
       const char = codeContent[displayedText.length]
-      const delay = char === "\n" ? 1 : 0.05 + Math.random() * 0.1
+      const delay = char === "\n" ? 300 : 30 + Math.random() * 50
       const timer = setTimeout(() => {
         setDisplayedText(codeContent.slice(0, displayedText.length + 1))
         if (char === "\n") {
