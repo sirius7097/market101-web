@@ -1,20 +1,63 @@
 "use client"
 
-import { useRef, useCallback } from "react"
+import { useRef, useCallback, useEffect } from "react"
 
 export function useTypingSound() {
   const audioContextRef = useRef<AudioContext | null>(null)
+  const masterGainRef = useRef<GainNode | null>(null)
 
-  const getContext = useCallback(() => {
+  // 初始化 AudioContext
+  const initContext = useCallback(() => {
+    if (typeof window === "undefined") return null
+    
     if (!audioContextRef.current) {
-      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)()
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext
+      if (!AudioContextClass) return null
+      
+      const ctx = new AudioContextClass()
+      audioContextRef.current = ctx
+      
+      // 创建一个持久的 Master Gain 节点
+      const masterGain = ctx.createGain()
+      masterGain.gain.value = 2.0
+      masterGain.connect(ctx.destination)
+      masterGainRef.current = masterGain
     }
+    
+    // 如果处于挂起状态，尝试恢复
+    if (audioContextRef.current.state === "suspended") {
+      audioContextRef.current.resume()
+    }
+    
     return audioContextRef.current
   }, [])
 
+  // 页面加载时尝试初始化（虽然可能被浏览器拦截，但能减少后续延迟）
+  useEffect(() => {
+    const handleInteraction = () => {
+      initContext()
+      // 移除监听器，只需一次交互即可激活
+      window.removeEventListener("mousedown", handleInteraction)
+      window.removeEventListener("keydown", handleInteraction)
+      window.removeEventListener("touchstart", handleInteraction)
+    }
+
+    window.addEventListener("mousedown", handleInteraction)
+    window.addEventListener("keydown", handleInteraction)
+    window.addEventListener("touchstart", handleInteraction)
+
+    return () => {
+      window.removeEventListener("mousedown", handleInteraction)
+      window.removeEventListener("keydown", handleInteraction)
+      window.removeEventListener("touchstart", handleInteraction)
+    }
+  }, [initContext])
+
   const playTypeSound = useCallback(() => {
     try {
-      const ctx = getContext()
+      const ctx = initContext()
+      if (!ctx || !masterGainRef.current) return
+      
       const now = ctx.currentTime
 
       // 深沉的低频 - 超低音
@@ -39,24 +82,20 @@ export function useTypingSound() {
       lowpass.type = "lowpass"
       lowpass.frequency.value = 200
 
-      const masterGain = ctx.createGain()
-      masterGain.gain.value = 2.0
-
       bassOsc.connect(bassGain)
       subOsc.connect(subGain)
       bassGain.connect(lowpass)
       subGain.connect(lowpass)
-      lowpass.connect(masterGain)
-      masterGain.connect(ctx.destination)
+      lowpass.connect(masterGainRef.current)
 
       bassOsc.start(now)
       subOsc.start(now)
       bassOsc.stop(now + 0.18)
       subOsc.stop(now + 0.1)
-    } catch {
+    } catch (e) {
       // Silently fail
     }
-  }, [getContext])
+  }, [initContext])
 
   const playEnterSound = useCallback(() => {
     playTypeSound()
