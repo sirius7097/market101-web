@@ -7,7 +7,7 @@ import { useTypingSound } from "@/hooks/use-typing-sound"
 import type { JSX } from "react"
 
 const codeContent = `// MARKET101 Trading Engine v2.0
-// 自研交易策略引擎
+// MARKET101 TERMINAL v2.0
 
 import { KAIYANG, ALPHA DOJO } from '@market101/strategies'
 
@@ -189,7 +189,7 @@ export function HeroSection() {
             MARKET101
           </h1>
           <p className="text-muted-foreground text-base sm:text-lg md:text-xl tracking-widest">
-            // TRADING ENGINE v2.0
+            MARKET101 TERMINAL
           </p>
         </div>
 

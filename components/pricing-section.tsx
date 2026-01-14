@@ -49,23 +49,19 @@ export function PricingSection() {
               <div className="space-y-4 text-sm mb-6 flex-1">
                 <div className="flex items-center gap-2">
                   <span className="text-primary">[✓]</span>
+                  <span className="text-muted-foreground">MARKET101 TERMINAL v2.0</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-primary">[✓]</span>
                   <span className="text-muted-foreground">KAIYANG '开阳'交易引擎</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-primary">[✓]</span>
-                  <span className="text-muted-foreground">ALPHA DOJO 交易引擎 </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-primary">[✓]</span>
-                  <span className="text-muted-foreground">引擎实时交易计划</span>
+                  <span className="text-muted-foreground">ALPHA DOJO 交易引擎</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-primary">[✓]</span>
                   <span className="text-muted-foreground">Telegram 社群支持</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-primary">[✓]</span>
-                  <span className="text-muted-foreground">EMAIL 零延迟推送</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-primary">[✓]</span>
@@ -74,7 +70,7 @@ export function PricingSection() {
               </div>
 
               <button className="w-full py-2 border border-border text-muted-foreground hover:border-primary hover:text-primary transition-colors text-sm mt-auto">
-                {">"} 订阅付费_
+                {">"} 即刻订购_
               </button>
             </div>
           </div>
