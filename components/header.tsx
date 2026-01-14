@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import { Monitor } from "lucide-react"
 
 const navItems = [
   { name: "策略", href: "#strategies" },
@@ -41,6 +42,16 @@ export function Header() {
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-1">
+            {/* TERMINAL Link - Always visible */}
+            <a
+              href="https://www.market101.xyz/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3 py-1 text-sm text-primary hover:bg-primary/10 transition-colors border border-primary/30"
+            >
+              <Monitor className="w-4 h-4" />
+              <span>TERMINAL</span>
+            </a>
             {navItems.map((item) => (
               <a
                 key={item.name}
@@ -55,16 +66,27 @@ export function Header() {
             </span>
           </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden px-2 py-1 text-sm border border-border hover:border-primary transition-colors"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            [{isMenuOpen ? "×" : "≡"}]
-          </button>
+          {/* Mobile Nav - TERMINAL always visible */}
+          <div className="md:hidden flex items-center gap-2">
+            <a
+              href="https://www.market101.xyz/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 px-2 py-1 text-xs text-primary border border-primary/30"
+            >
+              <Monitor className="w-3.5 h-3.5" />
+              <span>TERMINAL</span>
+            </a>
+            <button
+              className="px-2 py-1 text-sm border border-border hover:border-primary transition-colors"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              [{isMenuOpen ? "×" : "≡"}]
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Nav */}
+        {/* Mobile Nav Menu */}
         {isMenuOpen && (
           <nav className="md:hidden py-4 border-t border-border">
             {navItems.map((item) => (
