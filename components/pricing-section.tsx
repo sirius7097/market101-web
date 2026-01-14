@@ -69,9 +69,14 @@ export function PricingSection() {
                 </div>
               </div>
 
-              <button className="w-full py-2 border border-border text-muted-foreground hover:border-primary hover:text-primary transition-colors text-sm mt-auto">
+              <a
+                href="https://t.me/MARKET101_VIVIAN"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2 border border-border text-muted-foreground hover:border-primary hover:text-primary transition-colors text-sm mt-auto text-center block"
+              >
                 {">"} 即刻订购_
-              </button>
+              </a>
             </div>
           </div>
 
