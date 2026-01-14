@@ -4,6 +4,8 @@ import { useEffect, useState, useRef, useCallback } from "react"
 import { CryptoPricePanel } from "./crypto-price-panel"
 import { Tilt3DCard } from "./tilt-3d-card"
 import { useTypingSound } from "@/hooks/use-typing-sound"
+import { useLanguageContext } from "./language-provider"
+import { translations } from "@/lib/translations"
 import type { JSX } from "react"
 
 const codeContent = `// MARKET101 Trading Engine v2.0
@@ -134,6 +136,7 @@ export function HeroSection() {
   const [isTypingComplete, setIsTypingComplete] = useState(false)
   const { playTypeSound, playEnterSound } = useTypingSound()
   const hasStartedRef = useRef(false)
+  const { language } = useLanguageContext()
 
   const triggerVibration = useCallback((duration = 10) => {
     // 检查是否为手机端且支持震动 API
@@ -209,7 +212,7 @@ export function HeroSection() {
                 <span className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-foreground/80" />
               </div>
               <span className="text-[10px] md:text-xs text-muted-foreground ml-2 truncate">
-                Discipline. Precision. Alpha.
+                {translations.hero.tagline[language]}
               </span>
             </div>
 
@@ -253,10 +256,10 @@ export function HeroSection() {
         {/* Stats - improved mobile grid */}
         <div className="mt-8 md:mt-12 grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 max-w-3xl mx-auto">
           {[
-            { label: "STRATEGIES", value: "02" },
-            { label: "PAIRS_MONITORED", value: "500+" },
-            { label: "UPTIME", value: "99.5%" },
-            { label: "STABLE_DAYS", value: "270+" },
+            { label: translations.hero.stats.strategies[language], value: "02" },
+            { label: translations.hero.stats.pairs[language], value: "500+" },
+            { label: translations.hero.stats.uptime[language], value: "99.5%" },
+            { label: translations.hero.stats.stableDays[language], value: "270+" },
           ].map((stat) => (
             <div key={stat.label} className="border border-border p-2 md:p-3 text-center bg-card/50">
               <div className="text-[10px] md:text-xs text-muted-foreground mb-1 truncate">{stat.label}</div>

@@ -1,4 +1,12 @@
+"use client"
+
+import { useLanguageContext } from "./language-provider"
+import { translations } from "@/lib/translations"
+
 export function TelegramSection() {
+  const { language } = useLanguageContext()
+  const t = translations.telegram
+
   return (
     <section id="telegram" className="py-24 relative">
       <div className="container mx-auto px-4">
@@ -29,33 +37,33 @@ export function TelegramSection() {
                       TELEGRAM
                     </h3>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground font-mono">
-                      <span>JOIN MARKET101 COMMUNITY</span>
+                      <span>{t.joinCommunity[language]}</span>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="text-center mb-8">
-                <h2 className="text-xl md:text-2xl font-bold text-foreground mb-4">{">"} 加入 MARKET101 官方频道_</h2>
+                <h2 className="text-xl md:text-2xl font-bold text-foreground mb-4">{">"} {t.joinChannel[language]}_</h2>
                 <p className="text-sm text-muted-foreground leading-relaxed max-w-md mx-auto">
-                  获取实时交易信号、市场分析与策略更新。
+                  {t.description[language]}
                 </p>
               </div>
 
               <div className="flex flex-wrap justify-center gap-4 mb-8 text-xs">
                 <span className="border border-muted-foreground/30 px-4 py-2 rounded">
                   <span className="text-muted-foreground">[</span>
-                  <span className="text-foreground">活跃社群</span>
+                  <span className="text-foreground">{t.tags.activeCommunity[language]}</span>
                   <span className="text-muted-foreground">]</span>
                 </span>
                 <span className="border border-muted-foreground/30 px-4 py-2 rounded">
                   <span className="text-muted-foreground">[</span>
-                  <span className="text-foreground">实时信号</span>
+                  <span className="text-foreground">{t.tags.liveSignals[language]}</span>
                   <span className="text-muted-foreground">]</span>
                 </span>
                 <span className="border border-muted-foreground/30 px-4 py-2 rounded">
                   <span className="text-muted-foreground">[</span>
-                  <span className="text-foreground">专业分析</span>
+                  <span className="text-foreground">{t.tags.proAnalysis[language]}</span>
                   <span className="text-muted-foreground">]</span>
                 </span>
               </div>

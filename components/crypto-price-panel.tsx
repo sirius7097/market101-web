@@ -3,6 +3,8 @@
 import { useEffect, useState, useRef, useCallback } from "react"
 import { TrendingUp, TrendingDown, RefreshCw, Wifi, WifiOff } from "lucide-react"
 import { Tilt3DCard } from "./tilt-3d-card"
+import { useLanguageContext } from "./language-provider"
+import { translations } from "@/lib/translations"
 
 interface CryptoPrice {
   symbol: string
@@ -76,6 +78,8 @@ export function CryptoPricePanel() {
   const [initialLoading, setInitialLoading] = useState(true) // 只在首次加载时显示加载动画
   const wsRef = useRef<WebSocket | null>(null)
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const { language } = useLanguageContext()
+  const t = translations.crypto
 
   const fetchPrices = useCallback(async () => {
     try {
@@ -132,9 +136,9 @@ export function CryptoPricePanel() {
   })
 
   const getStatusDisplay = () => {
-    if (connected && priceList.length > 0) return { text: "LIVE", color: "text-green-400", icon: Wifi }
+    if (connected && priceList.length > 0) return { text: t.live[language], color: "text-green-400", icon: Wifi }
     if (connecting) return { text: "...", color: "text-yellow-400", icon: RefreshCw }
-    return { text: "OFFLINE", color: "text-red-400", icon: WifiOff }
+    return { text: t.offline[language], color: "text-red-400", icon: WifiOff }
   }
 
   const status = getStatusDisplay()
@@ -154,7 +158,7 @@ export function CryptoPricePanel() {
               <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-muted-foreground/40" />
               <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-muted-foreground/60" />
             </div>
-            <span className="text-[8px] md:text-[10px] text-muted-foreground">PERP_FUTURES</span>
+            <span className="text-[8px] md:text-[10px] text-muted-foreground">{t.perpFutures[language]}</span>
           </div>
           <div className="flex items-center gap-0.5 md:gap-1">
             <StatusIcon className={`w-2 h-2 md:w-2.5 md:h-2.5 ${status.color} ${connecting ? "animate-spin" : ""}`} />
@@ -166,7 +170,7 @@ export function CryptoPricePanel() {
           {priceList.length === 0 ? (
             <div className="text-center text-muted-foreground py-3 md:py-4">
               <RefreshCw className="w-3 h-3 md:w-4 md:h-4 animate-spin mx-auto mb-1" />
-              <span className="text-[9px] md:text-[10px]">{connecting ? "CONNECTING..." : "RECONNECTING..."}</span>
+              <span className="text-[9px] md:text-[10px]">{connecting ? t.connecting[language] : t.reconnecting[language]}</span>
             </div>
           ) : (
             priceList.map((crypto) => (
@@ -237,11 +241,11 @@ export function CryptoPricePanel() {
               <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-muted-foreground/40" />
               <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-muted-foreground/60" />
             </div>
-            <span className="text-[8px] md:text-[10px] text-muted-foreground">RECENT_RECORDS</span>
+            <span className="text-[8px] md:text-[10px] text-muted-foreground">{t.recentRecords[language]}</span>
           </div>
           <div className="flex items-center gap-0.5 md:gap-1">
             <Wifi className="w-2 h-2 md:w-2.5 md:h-2.5 text-green-400" />
-            <span className="text-[8px] md:text-[9px] text-green-400">LIVE</span>
+            <span className="text-[8px] md:text-[9px] text-green-400">{t.live[language]}</span>
           </div>
         </div>
 

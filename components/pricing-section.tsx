@@ -1,3 +1,8 @@
+"use client"
+
+import { useLanguageContext } from "./language-provider"
+import { translations } from "@/lib/translations"
+
 const exchanges = [
   {
     name: "BINANCE",
@@ -20,6 +25,9 @@ const exchanges = [
 ]
 
 export function PricingSection() {
+  const { language } = useLanguageContext()
+  const t = translations.pricing
+
   return (
     <section id="pricing" className="py-24 relative bg-card/30">
       <div className="container mx-auto px-4">
@@ -27,9 +35,9 @@ export function PricingSection() {
         <div className="text-center mb-16">
           <div className="inline-block border border-border px-4 py-2 mb-4">
             <span className="text-muted-foreground text-sm">{"// "}</span>
-            <span className="text-primary text-sm">ACCESS.config</span>
+            <span className="text-primary text-sm">{t.sectionFile[language]}</span>
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground">{">"} 接入方案_</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground">{">"} {t.sectionTitle[language]}_</h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -37,35 +45,35 @@ export function PricingSection() {
           <div className="terminal-window rounded overflow-hidden flex flex-col">
             <div className="terminal-header px-4 py-2 flex items-center justify-between">
               <span className="text-xs text-muted-foreground">independent.node</span>
-              <span className="text-xs text-muted-foreground px-2 py-0.5 border border-muted-foreground">订阅</span>
+              <span className="text-xs text-muted-foreground px-2 py-0.5 border border-muted-foreground">{t.subscription[language]}</span>
             </div>
             <div className="p-6 flex-1 flex flex-col">
               <div className="mb-6">
                 <span className="text-3xl font-bold text-foreground">500</span>
                 <span className="text-muted-foreground"> USDT</span>
-                <span className="text-muted-foreground text-sm"> /month</span>
+                <span className="text-muted-foreground text-sm"> {t.perMonth[language]}</span>
               </div>
 
               <div className="space-y-4 text-sm mb-6 flex-1">
                 <div className="flex items-center gap-2">
                   <span className="text-primary">[✓]</span>
-                  <span className="text-muted-foreground">MARKET101 TERMINAL v2.0</span>
+                  <span className="text-muted-foreground">{t.features.terminal[language]}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-primary">[✓]</span>
-                  <span className="text-muted-foreground">KAIYANG '开阳'交易引擎</span>
+                  <span className="text-muted-foreground">{t.features.kaiyang[language]}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-primary">[✓]</span>
-                  <span className="text-muted-foreground">ALPHA DOJO 交易引擎</span>
+                  <span className="text-muted-foreground">{t.features.alphaDojo[language]}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-primary">[✓]</span>
-                  <span className="text-muted-foreground">Telegram 社群支持</span>
+                  <span className="text-muted-foreground">{t.features.telegramSupport[language]}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-primary">[✓]</span>
-                  <span className="text-muted-foreground">TG_Bot 零延迟推送</span>
+                  <span className="text-muted-foreground">{t.features.botPush[language]}</span>
                 </div>
               </div>
 
@@ -75,7 +83,7 @@ export function PricingSection() {
                 rel="noopener noreferrer"
                 className="w-full py-2 border border-border text-muted-foreground hover:border-primary hover:text-primary transition-colors text-sm mt-auto text-center block"
               >
-                {">"} 即刻订购_
+                {">"} {t.orderNow[language]}_
               </a>
             </div>
           </div>
@@ -84,7 +92,7 @@ export function PricingSection() {
           <div className="terminal-window rounded overflow-hidden border-primary/50 flex flex-col">
             <div className="terminal-header px-4 py-2 flex items-center justify-between">
               <span className="text-xs text-muted-foreground">partner.integration</span>
-              <span className="text-xs text-primary px-2 py-0.5 border border-primary animate-pulse">推荐</span>
+              <span className="text-xs text-primary px-2 py-0.5 border border-primary animate-pulse">{t.recommended[language]}</span>
             </div>
             <div className="p-6 flex-1 flex flex-col">
               <div className="mb-6 flex items-center gap-3 flex-wrap">
@@ -123,7 +131,7 @@ export function PricingSection() {
                 ))}
               </div>
 
-              <p className="text-xs text-muted-foreground text-center mt-auto">{"// "} 点击链接注册后联系我们激活</p>
+              <p className="text-xs text-muted-foreground text-center mt-auto">{"// "} {t.freeAccess.note[language]}</p>
             </div>
           </div>
         </div>

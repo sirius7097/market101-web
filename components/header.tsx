@@ -2,17 +2,20 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { Monitor } from "lucide-react"
-
-const navItems = [
-  { name: "策略", href: "#strategies" },
-  { name: "订阅", href: "#pricing" },
-  { name: "TELEGRAM频道", href: "#telegram" },
-]
+import { Monitor, Globe } from "lucide-react"
+import { useLanguageContext } from "./language-provider"
+import { translations } from "@/lib/translations"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [time, setTime] = useState("")
+  const { language, toggleLanguage, mounted } = useLanguageContext()
+
+  const navItems = [
+    { name: translations.nav.strategies[language], href: "#strategies" },
+    { name: translations.nav.subscribe[language], href: "#pricing" },
+    { name: translations.nav.telegram[language], href: "#telegram" },
+  ]
 
   useEffect(() => {
     const updateTime = () => {
@@ -23,6 +26,14 @@ export function Header() {
     const interval = setInterval(updateTime, 1000)
     return () => clearInterval(interval)
   }, [])
+
+  const toggleButtonLabel = language === 'zh' 
+    ? translations.langToggle.en[language]
+    : translations.langToggle.zh[language]
+  
+  const toggleButtonHint = language === 'zh'
+    ? translations.langToggle.switchToEnglish[language]
+    : translations.langToggle.switchToChinese[language]
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 border-b border-border backdrop-blur-sm">
@@ -54,13 +65,26 @@ export function Header() {
             </a>
             {navItems.map((item) => (
               <a
-                key={item.name}
+                key={item.href}
                 href={item.href}
                 className="px-3 py-1 text-sm text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
               >
                 [{item.name}]
               </a>
             ))}
+            
+            {/* Language Toggle Button */}
+            {mounted && (
+              <button
+                onClick={toggleLanguage}
+                className="ml-2 flex items-center gap-1 px-2 py-1 text-sm text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors border border-border"
+                title={toggleButtonHint}
+              >
+                <Globe className="w-3.5 h-3.5" />
+                <span>{toggleButtonLabel}</span>
+              </button>
+            )}
+            
             <span className="ml-4 text-xs text-muted-foreground border border-border px-2 py-1">
               Time: {time} UTC+8
             </span>
@@ -68,6 +92,17 @@ export function Header() {
 
           {/* Mobile Nav - TERMINAL always visible */}
           <div className="md:hidden flex items-center gap-2">
+            {/* Mobile Language Toggle */}
+            {mounted && (
+              <button
+                onClick={toggleLanguage}
+                className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground border border-border"
+                title={toggleButtonHint}
+              >
+                <Globe className="w-3 h-3" />
+                <span>{toggleButtonLabel}</span>
+              </button>
+            )}
             <a
               href="https://www.market101.xyz/"
               target="_blank"
@@ -91,7 +126,7 @@ export function Header() {
           <nav className="md:hidden py-4 border-t border-border">
             {navItems.map((item) => (
               <a
-                key={item.name}
+                key={item.href}
                 href={item.href}
                 className="block py-2 text-sm text-muted-foreground hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}

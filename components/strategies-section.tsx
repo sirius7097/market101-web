@@ -1,4 +1,12 @@
+"use client"
+
+import { useLanguageContext } from "./language-provider"
+import { translations } from "@/lib/translations"
+
 export function StrategiesSection() {
+  const { language } = useLanguageContext()
+  const t = translations.strategies
+
   return (
     <section id="strategies" className="py-24 relative">
       <div className="container mx-auto px-4">
@@ -6,9 +14,9 @@ export function StrategiesSection() {
         <div className="text-center mb-16">
           <div className="inline-block border border-border px-4 py-2 mb-4">
             <span className="text-muted-foreground text-sm">{"// "}</span>
-            <span className="text-primary text-sm">STRATEGIES.md</span>
+            <span className="text-primary text-sm">{t.sectionFile[language]}</span>
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground">{">"} 双引擎策略系统_</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground">{">"} {t.sectionTitle[language]}_</h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
@@ -24,13 +32,13 @@ export function StrategiesSection() {
             <div className="p-6">
               <pre className="text-primary text-xs mb-4 hidden sm:block">
                 {`╔═══════════════════════════════╗
-║        KAIYANG              ║
-║      主流波段策略            ║
+║        ${t.kaiyang.name[language]}              ║
+║      ${t.kaiyang.subtitle[language]}            ║
 ╚═══════════════════════════════╝`}
               </pre>
               <div className="sm:hidden mb-4">
-                <h3 className="text-xl text-primary font-bold">KAIYANG</h3>
-                <p className="text-sm text-muted-foreground">主流波段策略</p>
+                <h3 className="text-xl text-primary font-bold">{t.kaiyang.name[language]}</h3>
+                <p className="text-sm text-muted-foreground">{t.kaiyang.subtitle[language]}</p>
               </div>
 
               <div className="space-y-2 text-sm">
@@ -55,29 +63,29 @@ export function StrategiesSection() {
               <div className="mt-6 pt-4 border-t border-border">
                 <p className="text-xs text-muted-foreground leading-relaxed">
                   <span className="text-primary">{"// "}</span>
-                  专注于主流资产的中长期波段交易，通过多维度技术指标与市场情绪分析，精准捕捉趋势拐点，实现权益的稳定增长。
+                  {t.kaiyang.description[language]}
                 </p>
               </div>
 
               <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
                 <div className="border border-border px-2 py-1">
                   <span className="text-muted-foreground">[</span>
-                  <span className="text-primary">波段交易</span>
+                  <span className="text-primary">{t.kaiyang.tags.swingTrading[language]}</span>
                   <span className="text-muted-foreground">]</span>
                 </div>
                 <div className="border border-border px-2 py-1">
                   <span className="text-muted-foreground">[</span>
-                  <span className="text-primary">风控严格</span>
+                  <span className="text-primary">{t.kaiyang.tags.riskControl[language]}</span>
                   <span className="text-muted-foreground">]</span>
                 </div>
                 <div className="border border-border px-2 py-1">
                   <span className="text-muted-foreground">[</span>
-                  <span className="text-primary">技术分析</span>
+                  <span className="text-primary">{t.kaiyang.tags.technicalAnalysis[language]}</span>
                   <span className="text-muted-foreground">]</span>
                 </div>
                 <div className="border border-border px-2 py-1">
                   <span className="text-muted-foreground">[</span>
-                  <span className="text-primary">稳定增长</span>
+                  <span className="text-primary">{t.kaiyang.tags.stableGrowth[language]}</span>
                   <span className="text-muted-foreground">]</span>
                 </div>
               </div>
@@ -96,13 +104,13 @@ export function StrategiesSection() {
             <div className="p-6">
               <pre className="text-accent text-xs mb-4 hidden sm:block">
                 {`╔═══════════════════════════════╗
-║       ALPHA DOJO           ║
-║      山寨暴涨捕捉策略        ║
+║       ${t.alphaDojo.name[language]}           ║
+║      ${t.alphaDojo.subtitle[language]}        ║
 ╚═══════════════════════════════╝`}
               </pre>
               <div className="sm:hidden mb-4">
-                <h3 className="text-xl text-accent font-bold">ALPHA DOJO</h3>
-                <p className="text-sm text-muted-foreground">山寨暴涨捕捉策略</p>
+                <h3 className="text-xl text-accent font-bold">{t.alphaDojo.name[language]}</h3>
+                <p className="text-sm text-muted-foreground">{t.alphaDojo.subtitle[language]}</p>
               </div>
 
               <div className="space-y-2 text-sm">
@@ -127,29 +135,29 @@ export function StrategiesSection() {
               <div className="mt-6 pt-4 border-t border-border">
                 <p className="text-xs text-muted-foreground leading-relaxed">
                   <span className="text-accent">{"// "}</span>
-                  实时监控山寨币市场异动，结合全链路数据与资金流向分析，快速识别潜力标的，捕捉短期爆发行情。
+                  {t.alphaDojo.description[language]}
                 </p>
               </div>
 
               <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
                 <div className="border border-border px-2 py-1">
                   <span className="text-muted-foreground">[</span>
-                  <span className="text-accent">快速响应</span>
+                  <span className="text-accent">{t.alphaDojo.tags.fastResponse[language]}</span>
                   <span className="text-muted-foreground">]</span>
                 </div>
                 <div className="border border-border px-2 py-1">
                   <span className="text-muted-foreground">[</span>
-                  <span className="text-accent">高额涨幅</span>
+                  <span className="text-accent">{t.alphaDojo.tags.highGains[language]}</span>
                   <span className="text-muted-foreground">]</span>
                 </div>
                 <div className="border border-border px-2 py-1">
                   <span className="text-muted-foreground">[</span>
-                  <span className="text-accent">全链分析</span>
+                  <span className="text-accent">{t.alphaDojo.tags.onChainAnalysis[language]}</span>
                   <span className="text-muted-foreground">]</span>
                 </div>
                 <div className="border border-border px-2 py-1">
                   <span className="text-muted-foreground">[</span>
-                  <span className="text-accent">异动捕捉</span>
+                  <span className="text-accent">{t.alphaDojo.tags.surgeCapture[language]}</span>
                   <span className="text-muted-foreground">]</span>
                 </div>
               </div>
