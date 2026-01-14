@@ -188,10 +188,9 @@ export function HeroSection() {
           >
             MARKET101
           </h1>
-          <div className="text-muted-foreground text-base sm:text-lg md:text-xl tracking-widest">
-            <p className="mb-1">MARKET101 TERMINAL</p>
-            <p className="text-sm sm:text-base">// Trading Engine v2.0</p>
-          </div>
+          <p className="text-muted-foreground text-base sm:text-lg md:text-xl tracking-widest">
+            MARKET101 TERMINAL // Trading Engine v2.0
+          </p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-4 md:gap-6 max-w-6xl mx-auto items-start">
