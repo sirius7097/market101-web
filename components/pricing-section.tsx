@@ -2,19 +2,19 @@ const exchanges = [
   {
     name: "BINANCE",
     rebate: "20%",
-    link: "https://www.binance.com/zh-CN/register?ref=bitjh",
+    link: "https://accounts.bmwweb.academy/register?ref=MARKET101",
     status: "ONLINE",
   },
   {
     name: "BYBIT",
-    rebate: "33%",
-    link: "https://www.bybit.com/register?affiliate_id=bitjh",
+    rebate: "20%",
+    link: "https://partner.bybit.com/b/101MARKET",
     status: "ONLINE",
   },
   {
     name: "BITGET",
-    rebate: "40%",
-    link: "https://partner.hdmune.cn/bg/BITJH101",
+    rebate: "20%",
+    link: "https://partner.hdmune.cn/bg/MARKET101",
     status: "ONLINE",
   },
 ]
