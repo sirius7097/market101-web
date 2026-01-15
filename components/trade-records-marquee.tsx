@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 import { useLanguageContext } from "./language-provider"
 import { translations } from "@/lib/translations"
@@ -59,9 +59,18 @@ export function TradeRecordsMarquee() {
   const searchParams = useSearchParams()
   const [records, setRecords] = useState<TradeRecord[]>(defaultRecords)
   const [isEditing, setIsEditing] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const isAdmin = searchParams.get("admin") === "market101"
   const { language } = useLanguageContext()
   const t = translations.tradeRecords
+
+  // 确保客户端 hydration 完成后才使用正确的语言
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // 使用实际语言或默认中文（服务端渲染时）
+  const currentLang = mounted ? language : 'zh'
 
   const updateRecord = (id: number, field: keyof TradeRecord, value: string) => {
     setRecords((prev) =>
@@ -121,16 +130,16 @@ export function TradeRecordsMarquee() {
           <span className="text-sm text-muted-foreground font-mono tracking-wider">ENGINE LIVE PnL</span>
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
         </div>
-        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 tracking-tight">{t.title[language]}</h2>
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 tracking-tight">{t.title[currentLang]}</h2>
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-          {t.subtitle[language]}
+          {t.subtitle[currentLang]}
         </p>
         {isAdmin && (
           <button
             onClick={() => setIsEditing(!isEditing)}
             className="mb-6 px-4 py-2 text-xs font-mono text-muted-foreground border border-border/50 hover:border-primary hover:text-primary transition-colors"
           >
-            {isEditing ? t.doneButton[language] : t.editButton[language]}
+            {isEditing ? t.doneButton[currentLang] : t.editButton[currentLang]}
           </button>
         )}
         {isAdmin && isEditing && (
@@ -148,13 +157,13 @@ export function TradeRecordsMarquee() {
                 </div>
               ))}
             </div>
-            <button onClick={addRecord} className="mt-3 px-3 py-1 text-xs font-mono text-muted-foreground border border-border/50 hover:border-primary hover:text-primary transition-colors">{t.addRecord[language]}</button>
+            <button onClick={addRecord} className="mt-3 px-3 py-1 text-xs font-mono text-muted-foreground border border-border/50 hover:border-primary hover:text-primary transition-colors">{t.addRecord[currentLang]}</button>
           </div>
         )}
         <div className="flex flex-wrap justify-center gap-8 md:gap-16">
-          <div className="text-center"><div className="text-3xl md:text-5xl font-bold text-primary mb-2">+285%</div><div className="text-sm text-muted-foreground font-mono">{t.stats.maxGain[language]}</div></div>
-          <div className="text-center"><div className="text-3xl md:text-5xl font-bold text-foreground mb-2">538+</div><div className="text-sm text-muted-foreground font-mono">{t.stats.monitoring[language]}</div></div>
-          <div className="text-center"><div className="text-3xl md:text-5xl font-bold text-primary mb-2">100+</div><div className="text-sm text-muted-foreground font-mono">{t.stats.successful[language]}</div></div>
+          <div className="text-center"><div className="text-3xl md:text-5xl font-bold text-primary mb-2">+285%</div><div className="text-sm text-muted-foreground font-mono">{t.stats.maxGain[currentLang]}</div></div>
+          <div className="text-center"><div className="text-3xl md:text-5xl font-bold text-foreground mb-2">538+</div><div className="text-sm text-muted-foreground font-mono">{t.stats.monitoring[currentLang]}</div></div>
+          <div className="text-center"><div className="text-3xl md:text-5xl font-bold text-primary mb-2">100+</div><div className="text-sm text-muted-foreground font-mono">{t.stats.successful[currentLang]}</div></div>
         </div>
       </div>
     </section>
