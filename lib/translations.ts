@@ -1,6 +1,12 @@
 export type Language = 'zh' | 'en'
 
 export const translations = {
+  langToggle: {
+    en: { zh: 'EN', en: 'EN' },
+    zh: { zh: '中', en: '中' },
+    switchToEnglish: { zh: 'Switch to English', en: 'Switch to English' },
+    switchToChinese: { zh: 'Switch to Chinese', en: 'Switch to Chinese' },
+  },
   nav: {
     strategies: { zh: '策略', en: 'Strategies' },
     subscribe: { zh: '订阅', en: 'Subscribe' },
@@ -24,61 +30,67 @@ export const translations = {
     recentRecords: { zh: 'RECENT_RECORDS', en: 'RECENT_RECORDS' },
   },
   strategies: {
-    title: { zh: '// STRATEGIES.md', en: '// STRATEGIES.md' },
-    subtitle: { zh: '> 双引擎策略系统_', en: '> Dual-Engine Strategy System_' },
+    sectionFile: { zh: 'STRATEGIES.md', en: 'STRATEGIES.md' },
+    sectionTitle: { zh: '双引擎策略系统', en: 'Dual-Engine Strategy System' },
     kaiyang: {
-      name: { zh: 'KAIYANG\n主流波段策略', en: 'KAIYANG\nMainstream Swing Strategy' },
-      target: { zh: 'BTC, ETH, SOL...', en: 'BTC, ETH, SOL...' },
-      type: { zh: "'swing_trading'", en: "'swing_trading'" },
-      timeframe: { zh: "'medium_term'", en: "'medium_term'" },
-      risk: { zh: "'controlled'", en: "'controlled'" },
+      name: { zh: 'KAIYANG', en: 'KAIYANG' },
+      subtitle: { zh: '主流波段策略', en: 'Mainstream Swing Strategy' },
       description: {
         zh: '专注于主流资产的中长线波段交易，运用多维度技术指标与市场情绪分析，精准捕捉趋势反转点位，实现稳健权益增长。',
         en: 'Focused on medium to long-term swing trading of mainstream assets, using multi-dimensional technical indicators and market sentiment analysis to precisely capture trend reversals for stable equity growth.',
       },
       tags: {
-        zh: ['波段交易', '风控严格', '技术分析', '稳定增长'],
-        en: ['Swing Trading', 'Strict Risk Control', 'Technical Analysis', 'Stable Growth'],
+        swingTrading: { zh: '波段交易', en: 'Swing Trading' },
+        riskControl: { zh: '风控严格', en: 'Strict Risk Control' },
+        technicalAnalysis: { zh: '技术分析', en: 'Technical Analysis' },
+        stableGrowth: { zh: '稳定增长', en: 'Stable Growth' },
       },
     },
     alphaDojo: {
-      name: { zh: 'ALPHA DOJO\n山寨暴涨捕捉策略', en: 'ALPHA DOJO\nAltcoin Surge Capture Strategy' },
-      target: { zh: 'Altcoins, Memes', en: 'Altcoins, Memes' },
-      type: { zh: "'surge_capture'", en: "'surge_capture'" },
-      timeframe: { zh: "'short_term'", en: "'short_term'" },
-      potential: { zh: "'high_roi'", en: "'high_roi'" },
+      name: { zh: 'ALPHA DOJO', en: 'ALPHA DOJO' },
+      subtitle: { zh: '山寨暴涨捕捉策略', en: 'Altcoin Surge Capture Strategy' },
       description: {
         zh: '实时监控山寨币市场异动，结合链上数据与资金流向分析，快速识别潜力标的，捕捉短期爆发性机会。',
         en: 'Real-time monitoring of altcoin market movements, combining on-chain data and fund flow analysis to quickly identify potential targets and capture short-term explosive opportunities.',
       },
       tags: {
-        zh: ['快速响应', '高额涨幅', '全链分析', '异动捕捉'],
-        en: ['Fast Response', 'High Gains', 'On-Chain Analysis', 'Surge Capture'],
+        fastResponse: { zh: '快速响应', en: 'Fast Response' },
+        highGains: { zh: '高额涨幅', en: 'High Gains' },
+        onChainAnalysis: { zh: '全链分析', en: 'On-Chain Analysis' },
+        surgeCapture: { zh: '异动捕捉', en: 'Surge Capture' },
       },
     },
   },
   pricing: {
-    title: { zh: '> 接入方案_', en: '> Access Plans_' },
-    subscribe: { zh: '订阅', en: 'Subscribe' },
+    sectionFile: { zh: 'PRICING.md', en: 'PRICING.md' },
+    sectionTitle: { zh: '接入方案', en: 'Access Plans' },
+    subscription: { zh: '订阅', en: 'Subscribe' },
+    perMonth: { zh: '/月', en: '/month' },
     recommended: { zh: '推荐', en: 'Recommended' },
-    orderNow: { zh: '> 即刻订购_', en: '> Order Now_' },
+    orderNow: { zh: '即刻订购', en: 'Order Now' },
     feeRebate: { zh: '手续费返佣', en: 'Fee Rebate' },
     features: {
       terminal: { zh: 'MARKET101 TERMINAL v2.0', en: 'MARKET101 TERMINAL v2.0' },
       kaiyang: { zh: "KAIYANG '开阳'交易引擎", en: "KAIYANG 'Kaiyang' Trading Engine" },
       alphaDojo: { zh: 'ALPHA DOJO 交易引擎', en: 'ALPHA DOJO Trading Engine' },
-      telegram: { zh: 'Telegram 社群支持', en: 'Telegram Community Support' },
-      tgBot: { zh: 'TG_Bot 零延迟推送', en: 'TG_Bot Zero-Latency Push' },
+      telegramSupport: { zh: 'Telegram 社群支持', en: 'Telegram Community Support' },
+      botPush: { zh: 'TG_Bot 零延迟推送', en: 'TG_Bot Zero-Latency Push' },
     },
-    partnerNote: { zh: '// 点击链接注册后联系我们激活', en: '// Click to register, then contact us to activate' },
+    freeAccess: {
+      note: { zh: '点击链接注册后联系我们激活', en: 'Click to register, then contact us to activate' },
+    },
   },
   telegram: {
-    title: { zh: '> 加入 MARKET101 官方频道_', en: '> Join MARKET101 Official Channel_' },
-    joinButton: { zh: '> ./join_telegram.sh', en: '> ./join_telegram.sh' },
-    features: {
-      community: { zh: '活跃社群', en: 'Active Community' },
-      signals: { zh: '实时信号', en: 'Live Signals' },
-      analysis: { zh: '专业分析', en: 'Pro Analysis' },
+    joinCommunity: { zh: '加入社群', en: 'Join Community' },
+    joinChannel: { zh: '加入 MARKET101 官方频道', en: 'Join MARKET101 Official Channel' },
+    description: { 
+      zh: '获取实时交易信号、市场分析和专业策略支持。与志同道合的交易者一起成长。', 
+      en: 'Get real-time trading signals, market analysis and professional strategy support. Grow together with like-minded traders.' 
+    },
+    tags: {
+      activeCommunity: { zh: '活跃社群', en: 'Active Community' },
+      liveSignals: { zh: '实时信号', en: 'Live Signals' },
+      proAnalysis: { zh: '专业分析', en: 'Pro Analysis' },
     },
   },
   tradeRecords: {
