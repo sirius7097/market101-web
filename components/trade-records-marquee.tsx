@@ -50,7 +50,7 @@ function TradeCard({ record }: { record: TradeRecord }) {
         {formatPrice(record.entryPrice)} → {formatPrice(record.exitPrice)}
       </div>
       <div className="text-lg text-primary font-bold">
-        {record.strategy === "KAIYANG" ? \`+\${record.pointsGained?.toLocaleString()} pts\` : \`+\${record.gain}%\`}
+        {record.strategy === "KAIYANG" ? `+${record.pointsGained?.toLocaleString()} pts` : `+${record.gain}%`}
       </div>
     </div>
   )
